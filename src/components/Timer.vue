@@ -40,7 +40,7 @@ export default class Timer extends Vue {
 
     @Watch('duration')
     onDurationChanged(value: number, oldValue: number) {
-        this.restTime = value
+        this.restTime = value * 60
         this.renderClock()
     }
 
