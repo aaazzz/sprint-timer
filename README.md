@@ -1,4 +1,4 @@
-# sprint timer
+# Sprint timer
 
 ## Project setup
 ```
