@@ -34,6 +34,7 @@ export default class Timer extends Vue {
     private startTime: any = new Date()
     private duration = 10  //minutes
     private restTime = 0 //seconds
+    private notificationType = 0 //0: window, 1: desktop
 
     get hoge() {
         return Math.random()
@@ -51,13 +52,20 @@ export default class Timer extends Vue {
             clearInterval(this.refreshIntervalId);
             this.isStopped = true
             this.restTime = this.duration * 60
-            Push.create(`Finished. Duration: ${this.duration} mins.`)
+            if (this.notificationType === 0) {
+                alert(`Finished. Duration: ${this.duration} mins.`)
+            } else {
+                Push.create(`Finished. Duration: ${this.duration} mins.`, {
+                    icon: 'https://i.imgur.com/P7cw2w5.png',
+                })
+            }
             this.renderClock()
         }
     }
     
  // Lifecycle hook
     mounted () {
+        Push.Permission.request(()=> {this.notificationType = 1}, ()=>{this.notificationType = 0});
         this.element = document.getElementById("clock-canvas");
         this.graphic = this.element.getContext("2d");
         this.radius = this.element.height / 2;
