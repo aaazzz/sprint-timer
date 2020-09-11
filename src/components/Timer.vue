@@ -58,8 +58,6 @@ export default class Timer extends Vue {
     
  // Lifecycle hook
     mounted () {
-
-        Push.Permission.request(()=> {console.log('Grant')}, ()=>{console.log('Denied')});
         this.element = document.getElementById("clock-canvas");
         this.graphic = this.element.getContext("2d");
         this.radius = this.element.height / 2;
