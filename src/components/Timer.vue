@@ -20,6 +20,7 @@
 
 <script lang="ts">
 import { Component, Watch, Prop, Vue } from "vue-property-decorator";
+import Push from 'push.js'
 
 @Component
 export default class Timer extends Vue {
@@ -50,13 +51,15 @@ export default class Timer extends Vue {
             clearInterval(this.refreshIntervalId);
             this.isStopped = true
             this.restTime = this.duration * 60
-            alert(`Finished. Duration: ${this.duration} mins.`)
+            Push.create(`Finished. Duration: ${this.duration} mins.`)
             this.renderClock()
         }
     }
     
  // Lifecycle hook
     mounted () {
+
+        Push.Permission.request(()=> {console.log('Grant')}, ()=>{console.log('Denied')});
         this.element = document.getElementById("clock-canvas");
         this.graphic = this.element.getContext("2d");
         this.radius = this.element.height / 2;
